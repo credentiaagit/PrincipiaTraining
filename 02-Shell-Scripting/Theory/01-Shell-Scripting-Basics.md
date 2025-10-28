@@ -690,10 +690,40 @@ chmod +x script.sh
 
 ## Reference Links
 
-1. **Bash Guide**: https://mywiki.wooledge.org/BashGuide
-2. **Advanced Bash Scripting**: https://tldp.org/LDP/abs/html/
-3. **ShellCheck**: https://www.shellcheck.net/ - Script analysis tool
-4. **Bash Hackers Wiki**: https://wiki.bash-hackers.org/
+### 📚 Theory & Learning Resources
+
+1. **Comprehensive Tutorials**:
+   - [Shell Scripting Tutorial](https://www.shellscript.sh/) - Complete beginner to advanced guide
+   - [Bash Guide for Beginners](https://tldp.org/LDP/Bash-Beginners-Guide/html/) - Structured learning path
+   - [Advanced Bash-Scripting Guide](https://tldp.org/LDP/abs/html/) - In-depth reference (FREE)
+   - [Bash Hackers Wiki](https://wiki.bash-hackers.org/) - Comprehensive wiki
+
+2. **Official Documentation**:
+   - [GNU Bash Reference Manual](https://www.gnu.org/software/bash/manual/) - Official manual
+   - [Bash Man Page](https://man7.org/linux/man-pages/man1/bash.1.html) - Complete reference
+   - [POSIX Shell Specification](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html)
+
+3. **Best Practices**:
+   - [Google Shell Style Guide](https://google.github.io/styleguide/shellguide.html) - Industry standards
+   - [Bash Pitfalls](https://mywiki.wooledge.org/BashPitfalls) - Common mistakes to avoid
+
+### 🎮 Hands-On Practice Resources
+
+1. **Interactive Practice**:
+   - [HackerRank - Bash Challenges](https://www.hackerrank.com/domains/shell) - Practice with instant feedback (FREE)
+   - [Exercism - Bash Track](https://exercism.org/tracks/bash) - Mentored exercises (FREE)
+   - [Command Challenge](https://cmdchallenge.com/) - Bash one-liner puzzles
+   - [OverTheWire - Bandit](https://overthewire.org/wargames/bandit/) - Security challenges
+
+2. **Online Environments**:
+   - [Replit - Bash](https://replit.com/languages/bash) - Write and run scripts online
+   - [JSLinux](https://bellard.org/jslinux/) - Full Linux in browser
+   - [Tutorialspoint - Bash Terminal](https://www.tutorialspoint.com/execute_bash_online.php) - Quick testing
+
+3. **Tools**:
+   - [ShellCheck](https://www.shellcheck.net/) - Script analyzer (ESSENTIAL)
+   - [ExplainShell](https://explainshell.com/) - Command explanation
+   - [Bash Debugger](http://bashdb.sourceforge.net/) - Step-through debugger
 
 ---
 

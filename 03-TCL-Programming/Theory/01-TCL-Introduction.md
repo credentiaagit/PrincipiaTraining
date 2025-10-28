@@ -529,10 +529,41 @@ set x 10 ;# comment    # Correct
 
 ## Reference Links
 
-1. **Official TCL Website**: https://www.tcl.tk/
-2. **TCL Tutorial**: https://www.tcl.tk/man/tcl8.6/tutorial/tcltutorial.html
-3. **TCL Wiki**: https://wiki.tcl-lang.org/
-4. **TCL Manual**: https://www.tcl.tk/man/tcl8.6/
+### 📚 Theory & Learning Resources
+
+1. **Official Documentation**:
+   - [TCL Official Website](https://www.tcl.tk/) - Main resource hub
+   - [TCL Tutorial](https://www.tcl.tk/man/tcl8.6/tutorial/tcltutorial.html) - Official tutorial
+   - [TCL Command Reference](https://www.tcl.tk/man/tcl8.6/TclCmd/contents.htm) - All commands
+   - [TCL Manual](https://www.tcl.tk/man/tcl8.6/) - Complete documentation
+
+2. **Comprehensive Tutorials**:
+   - [TutorialsPoint - TCL Tutorial](https://www.tutorialspoint.com/tcl-tk/index.htm) - Beginner-friendly
+   - [Learn TCL in Y Minutes](https://learnxinyminutes.com/docs/tcl/) - Quick overview
+   - [TCL Wiki](https://wiki.tcl-lang.org/) - 10,000+ pages of community knowledge
+   - [Wikibooks - Programming TCL](https://en.wikibooks.org/wiki/Programming:Tcl) - Free book
+
+3. **Best Practices**:
+   - [TCL Style Guide](https://www.tcl.tk/doc/styleGuide.pdf) - Official coding standards
+   - [TCL Idioms](https://wiki.tcl-lang.org/page/Tcl+idioms) - Common patterns
+   - [TCL Performance Tips](https://wiki.tcl-lang.org/page/performance)
+
+### 🎮 Hands-On Practice Resources
+
+1. **Online TCL Interpreters**:
+   - [TutorialsPoint - TCL Compiler](https://www.tutorialspoint.com/execute_tcl_online.php) - Run instantly (FREE)
+   - [Replit - TCL](https://replit.com/languages/tcl) - Online IDE with sharing
+   - [JDoodle - TCL Compiler](https://www.jdoodle.com/execute-tcl-online/) - Quick testing
+
+2. **Practice Exercises**:
+   - [Exercism - TCL Track](https://exercism.org/tracks/tcl) - Mentored practice (FREE)
+   - [Rosetta Code - TCL](https://rosettacode.org/wiki/Category:Tcl) - Example problems
+   - [Project Euler](https://projecteuler.net/) - Solve using TCL
+
+3. **Tools & Development**:
+   - [ActiveState TCL](https://www.activestate.com/products/tcl/) - Complete toolkit
+   - [Visual Studio Code - TCL Extension](https://marketplace.visualstudio.com/items?itemName=tclexec.tcl)
+   - [TCL Cookbook](https://wiki.tcl-lang.org/page/Tcl+Cookbook) - Solutions repository
 
 ---
 

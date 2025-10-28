@@ -463,5 +463,100 @@ ORDER BY total_value DESC;
 
 ---
 
+## Reference Links
+
+### 📚 Theory & Learning Resources
+
+1. **Comprehensive Tutorials**:
+   - [W3Schools SQL Tutorial](https://www.w3schools.com/sql/) - Interactive beginner-friendly guide
+   - [SQL Tutorial - Mode Analytics](https://mode.com/sql-tutorial/) - Comprehensive with real datasets
+   - [SQLZoo](https://sqlzoo.net/) - Interactive SQL tutorial
+   - [SQL Course - Khan Academy](https://www.khanacademy.org/computing/computer-programming/sql) - Free structured course
+
+2. **Official Documentation**:
+   - [MySQL Documentation](https://dev.mysql.com/doc/) - Complete MySQL reference
+   - [PostgreSQL Documentation](https://www.postgresql.org/docs/) - PostgreSQL manual
+   - [Oracle SQL Documentation](https://docs.oracle.com/en/database/oracle/oracle-database/) - Oracle reference
+   - [SQL Server Documentation](https://docs.microsoft.com/en-us/sql/sql-server/) - Microsoft SQL Server
+
+3. **Video Learning**:
+   - [freeCodeCamp SQL Course](https://www.youtube.com/watch?v=HXV3zeQKqGY) - 4-hour comprehensive video
+   - [LinkedIn Learning - SQL Essential Training](https://www.linkedin.com/learning/sql-essential-training-3)
+   - [Coursera - SQL for Data Science](https://www.coursera.org/learn/sql-for-data-science)
+
+### 🎮 Hands-On Practice Resources
+
+1. **Interactive Practice Platforms**:
+   - [HackerRank SQL](https://www.hackerrank.com/domains/sql) - Practice problems with instant feedback (FREE)
+   - [LeetCode Database](https://leetcode.com/problemset/database/) - SQL coding challenges (FREE)
+   - [SQLBolt](https://sqlbolt.com/) - Interactive lessons and exercises (FREE)
+   - [Exercism - SQL Track](https://exercism.org/tracks/plsql) - Mentored practice
+
+2. **Browser-Based SQL Environments**:
+   - [DB Fiddle](https://www.db-fiddle.com/) - Test SQL queries online (MySQL, PostgreSQL, SQLite)
+   - [SQL Fiddle](http://sqlfiddle.com/) - Practice SQL in browser
+   - [SQL Online IDE](https://sqliteonline.com/) - SQLite in browser
+   - [Programiz SQL Online](https://www.programiz.com/sql/online-compiler/) - Quick SQL testing
+
+3. **Practice with Real Data**:
+   - [Mode Analytics Public Datasets](https://mode.com/sql-tutorial/intro-to-intermediate-sql/) - Real business data
+   - [Stack Overflow Data Explorer](https://data.stackexchange.com/) - Query Stack Overflow data
+   - [Kaggle Datasets](https://www.kaggle.com/datasets) - Download and practice
+   - [SQL Practice](https://www.sql-practice.com/) - Hospital database exercises
+
+4. **SQL Challenge Sites**:
+   - [SQLZoo](https://sqlzoo.net/) - Progressive difficulty challenges
+   - [SQL Murder Mystery](https://mystery.knightlab.com/) - Learn SQL by solving a murder
+   - [Select Star SQL](https://selectstarsql.com/) - Interactive book with exercises
+
+### 📖 Quick References & Cheat Sheets
+
+1. **Cheat Sheets**:
+   - [SQL Cheat Sheet by Dataquest](https://www.dataquest.io/blog/sql-cheat-sheet/)
+   - [SQL Quick Reference - W3Schools](https://www.w3schools.com/sql/sql_quickref.asp)
+   - [PostgreSQL Cheat Sheet](https://www.postgresqltutorial.com/postgresql-cheat-sheet/)
+
+2. **Performance & Optimization**:
+   - [Use The Index, Luke!](https://use-the-index-luke.com/) - SQL indexing and tuning (EXCELLENT)
+   - [SQL Performance Explained](https://sql-performance-explained.com/) - Performance guide
+   - [Database Indexing Explained](https://www.essentialsql.com/what-is-a-database-index/)
+
+### 📚 Books & Comprehensive Resources
+
+1. **Free Books**:
+   - [SQL Notes for Professionals](https://goalkicker.com/SQLBook/) - FREE comprehensive guide
+   - [Intro to SQL - Khan Academy](https://www.khanacademy.org/computing/computer-programming/sql)
+
+2. **Recommended Books**:
+   - "SQL in 10 Minutes a Day" - Ben Forta
+   - "Learning SQL" - Alan Beaulieu (O'Reilly)
+   - "SQL Performance Explained" - Markus Winand
+
+### 🎓 Courses & Certifications
+
+1. **Free Online Courses**:
+   - [Codecademy - Learn SQL](https://www.codecademy.com/learn/learn-sql) - Interactive course
+   - [Udacity - SQL for Data Analysis](https://www.udacity.com/course/sql-for-data-analysis--ud198)
+   - [Stanford - Databases Course](https://online.stanford.edu/courses/soe-ydatabases-databases)
+
+2. **Certification Paths**:
+   - Oracle Database SQL Certified Associate
+   - Microsoft Certified: Azure Database Administrator Associate
+   - MySQL Database Administrator Certification
+
+### 💡 Community & Support
+
+1. **Forums & Q&A**:
+   - [Stack Overflow - SQL Tag](https://stackoverflow.com/questions/tagged/sql)
+   - [Database Administrators Stack Exchange](https://dba.stackexchange.com/)
+   - [Reddit r/SQL](https://www.reddit.com/r/SQL/)
+
+2. **Blogs & Resources**:
+   - [SQL Server Central](https://www.sqlservercentral.com/)
+   - [PostgreSQL Weekly](https://postgresweekly.com/)
+   - [Planet MySQL](https://planet.mysql.com/)
+
+---
+
 **Next Document**: `02-Joins-and-Advanced-Queries.md`
 
