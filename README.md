@@ -14,6 +14,7 @@ Welcome to the comprehensive technical training guide for our capital market sup
 - **Operating System**: Unix/Linux
 - **Database**: SQL (Oracle/MySQL/PostgreSQL)
 - **Job Scheduler**: Tidal Enterprise Scheduler
+- **Version Control**: Git
 - **Domain**: Capital Markets & Trading Systems
 
 ### System Purpose
@@ -89,15 +90,25 @@ PrincipiaTraining/
 │   └── Exercises/
 │       └── 01-SQL-Exercises.md
 │
-└── 05-Tidal-Scheduler/
+├── 05-Tidal-Scheduler/
+│   ├── Theory/
+│   │   ├── 01-Tidal-Overview.md
+│   │   └── 02-Tidal-Practical-Guide.md
+│   ├── SamplePrograms/
+│   │   ├── README.md
+│   │   └── 01-sample-job-definitions.md
+│   └── Exercises/
+│       └── 01-Tidal-Exercises.md
+│
+└── 06-Git-Version-Control/
     ├── Theory/
-    │   ├── 01-Tidal-Overview.md
-    │   └── 02-Tidal-Practical-Guide.md
+    │   ├── 01-Git-Fundamentals.md
+    │   └── 02-Git-Branching-and-Collaboration.md
     ├── SamplePrograms/
     │   ├── README.md
-    │   └── 01-sample-job-definitions.md
+    │   └── 01-git-workflow-examples.sh
     └── Exercises/
-        └── 01-Tidal-Exercises.md
+        └── 01-Git-Exercises.md
 ```
 
 ---
@@ -163,6 +174,13 @@ PrincipiaTraining/
 - Tidal scheduler concepts
 - Job dependencies and monitoring
 - End-of-day processing workflows
+
+### Phase 4.5: Version Control (1 week)
+**Goal**: Master Git for code management
+- Git fundamentals and workflow
+- Branching and merging strategies
+- Team collaboration with Git
+- Pull requests and code reviews
 
 ### Phase 5: Integration (Ongoing)
 **Goal**: Real-world project work

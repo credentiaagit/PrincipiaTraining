@@ -66,6 +66,11 @@ Our system handles critical capital market operations using:
    - Focus: Job definitions, dependencies, monitoring
    - Daily practice: 2-3 hours
 
+8. **Week 16-17**: Git Version Control
+   - Directory: `06-Git-Version-Control/`
+   - Focus: Git fundamentals, branching, collaboration
+   - Daily practice: 2-3 hours
+
 ### Phase 5: Integration & Real Projects (Week 17+)
 **Goal**: Work on actual project components
 
@@ -203,6 +208,28 @@ Our system handles critical capital market operations using:
 - Alert and notification setup
 - Performance considerations
 - Best practices for production
+
+---
+
+### 6. Git Version Control
+📁 Directory: `06-Git-Version-Control/`
+
+**Basic Topics**:
+- Git fundamentals and setup
+- Basic commands (add, commit, push, pull)
+- Repository initialization and cloning
+- Understanding Git workflow
+- Viewing history and changes
+- Undoing changes
+
+**Advanced Topics**:
+- Branching strategies (GitFlow, Feature Branch)
+- Merging and rebasing
+- Resolving conflicts
+- Tags and releases
+- Remote repository management
+- Collaboration workflows
+- Pull requests and code reviews
 
 ---
 
