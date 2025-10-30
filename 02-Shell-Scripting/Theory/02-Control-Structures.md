@@ -115,56 +115,351 @@ fi
 
 ## Test Operators
 
+Test operators allow you to check conditions in shell scripts. Understanding what each operator does is crucial for writing robust scripts.
+
 ### File Test Operators
+
+These operators test various properties of files and directories.
+
+#### Existence Tests
+
+**-e file** - File Exists (any type)
+- **What it does**: Checks if the file exists, regardless of type (file, directory, link, etc.)
+- **When to use**: General existence check when you don't care about file type
 ```bash
--e file     # File exists
--f file     # Regular file exists
--d file     # Directory exists
--s file     # File exists and not empty
--r file     # File is readable
--w file     # File is writable
--x file     # File is executable
--h file     # Symbolic link
--L file     # Symbolic link (same as -h)
--b file     # Block device
--c file     # Character device
--p file     # Named pipe
--S file     # Socket
+if [ -e "/path/to/file" ]; then
+    echo "Something exists at this path"
+fi
 ```
 
-**Examples:**
+**-f file** - Regular File Exists
+- **What it does**: Checks if path exists AND is a regular file (not a directory or special file)
+- **When to use**: Before reading/processing a file
+- **Most commonly used** for file operations
+```bash
+if [ -f "trades.csv" ]; then
+    echo "Trade file found, processing..."
+    process_trades "trades.csv"
+else
+    echo "ERROR: Trade file not found!"
+    exit 1
+fi
+```
+
+**-d directory** - Directory Exists
+- **What it does**: Checks if path exists AND is a directory
+- **When to use**: Before creating subdirectories, listing contents, or cd'ing
+```bash
+if [ -d "/opt/trading" ]; then
+    cd /opt/trading
+else
+    echo "Creating trading directory..."
+    mkdir -p /opt/trading
+fi
+```
+
+**-s file** - File Exists and is NOT Empty
+- **What it does**: Checks if file exists AND has size > 0 bytes
+- **When to use**: Verify file has content before processing
+```bash
+if [ -s "output.log" ]; then
+    echo "Log file has content"
+    cat output.log
+else
+    echo "Log file is empty or doesn't exist"
+fi
+```
+
+**Why -f vs -e matters:**
+```bash
+# Suppose we have a directory named "trades"
+if [ -e "trades" ]; then
+    echo "EXISTS: This will pass (directory exists)"
+fi
+
+if [ -f "trades" ]; then
+    echo "REGULAR FILE: This will FAIL (it's a directory, not a file)"
+fi
+```
+
+#### Permission Tests
+
+**-r file** - File is Readable
+- **What it does**: Checks if you have read permission for the file
+- **When to use**: Before attempting to read/open file
+```bash
+if [ -r "config.ini" ]; then
+    source config.ini
+else
+    echo "ERROR: Cannot read config file"
+    exit 1
+fi
+```
+
+**-w file** - File is Writable
+- **What it does**: Checks if you have write permission for the file
+- **When to use**: Before attempting to write/modify file
+```bash
+if [ -w "output.txt" ]; then
+    echo "Data" >> output.txt
+else
+    echo "ERROR: Cannot write to output file"
+    exit 1
+fi
+```
+
+**-x file** - File is Executable
+- **What it does**: Checks if you have execute permission
+- **When to use**: Before running a script or program
+```bash
+if [ -x "./process_trade.sh" ]; then
+    ./process_trade.sh
+else
+    echo "ERROR: Script is not executable"
+    echo "Fix with: chmod +x process_trade.sh"
+    exit 1
+fi
+```
+
+#### Special File Type Tests
+
+**-h file** or **-L file** - Symbolic Link
+- **What it does**: Checks if file is a symbolic link (soft link)
+- **When to use**: When you need to differentiate links from real files
+- **Note**: -h and -L are identical
+```bash
+if [ -L "current_log" ]; then
+    echo "This is a symbolic link"
+    echo "Points to: $(readlink current_log)"
+else
+    echo "This is a real file"
+fi
+```
+
+**-b file** - Block Device
+- **What it does**: Checks if file is a block device (like hard drives)
+- **When to use**: Low-level system programming, disk operations
+```bash
+if [ -b "/dev/sda1" ]; then
+    echo "This is a block device (disk partition)"
+fi
+```
+
+**-c file** - Character Device
+- **What it does**: Checks if file is a character device (like terminals, serial ports)
+- **When to use**: Terminal/device manipulation
+```bash
+if [ -c "/dev/tty" ]; then
+    echo "This is a character device (terminal)"
+fi
+```
+
+**-p file** - Named Pipe (FIFO)
+- **What it does**: Checks if file is a named pipe
+- **When to use**: Inter-process communication scenarios
+```bash
+if [ -p "/tmp/mypipe" ]; then
+    echo "This is a named pipe"
+fi
+```
+
+**-S file** - Socket
+- **What it does**: Checks if file is a socket
+- **When to use**: Network or Unix socket programming
+```bash
+if [ -S "/var/run/docker.sock" ]; then
+    echo "Docker socket found"
+fi
+```
+
+#### File Comparison Tests
+
+**file1 -nt file2** - Newer Than
+- **What it does**: True if file1 is newer than file2 (modification time)
+- **When to use**: Check if source is newer than output (build systems)
+```bash
+if [ "source.txt" -nt "output.txt" ]; then
+    echo "Source modified, need to regenerate output"
+    process_source
+fi
+```
+
+**file1 -ot file2** - Older Than
+- **What it does**: True if file1 is older than file2
+```bash
+if [ "backup.tar" -ot "data.txt" ]; then
+    echo "Backup is outdated, creating new backup"
+    tar -czf backup.tar data.txt
+fi
+```
+
+**file1 -ef file2** - Same File
+- **What it does**: True if both refer to same file (same inode)
+- **When to use**: Check if two paths point to same file (hard links)
+```bash
+if [ "file1.txt" -ef "file2.txt" ]; then
+    echo "These are the same file (hard linked)"
+fi
+```
+
+#### Complete File Test Examples
+
 ```bash
 #!/bin/bash
+# Comprehensive file validation script
 
-file="data.txt"
+FILE="$1"
 
-if [ -f "$file" ]; then
-    echo "File exists"
+echo "Analyzing file: $FILE"
+echo ""
+
+# Existence checks
+if [ ! -e "$FILE" ]; then
+    echo "❌ File does not exist"
+    exit 1
+fi
+echo "✓ File exists"
+
+# Type checks
+if [ -f "$FILE" ]; then
+    echo "✓ Regular file"
+elif [ -d "$FILE" ]; then
+    echo "✓ Directory"
+elif [ -L "$FILE" ]; then
+    echo "✓ Symbolic link → $(readlink "$FILE")"
+elif [ -b "$FILE" ]; then
+    echo "✓ Block device"
+elif [ -c "$FILE" ]; then
+    echo "✓ Character device"
+elif [ -p "$FILE" ]; then
+    echo "✓ Named pipe"
+elif [ -S "$FILE" ]; then
+    echo "✓ Socket"
+fi
+
+# Size check
+if [ -s "$FILE" ]; then
+    SIZE=$(du -h "$FILE" | cut -f1)
+    echo "✓ File has content (Size: $SIZE)"
 else
-    echo "File does not exist"
+    echo "⚠ File is empty (0 bytes)"
 fi
 
-if [ -r "$file" ]; then
-    echo "File is readable"
+# Permission checks
+echo ""
+echo "Permissions:"
+if [ -r "$FILE" ]; then
+    echo "✓ Readable"
+else
+    echo "❌ Not readable"
 fi
 
-if [ -w "$file" ]; then
-    echo "File is writable"
+if [ -w "$FILE" ]; then
+    echo "✓ Writable"
+else
+    echo "❌ Not writable"
 fi
 
-if [ -x "$file" ]; then
-    echo "File is executable"
+if [ -x "$FILE" ]; then
+    echo "✓ Executable"
+else
+    echo "❌ Not executable"
+fi
+```
+
+#### Capital Markets Use Case: File Validation
+
+```bash
+#!/bin/bash
+# Trade file processor with comprehensive validation
+
+TRADE_FILE="$1"
+
+# Step 1: Check if file exists and is a regular file
+if [ ! -f "$TRADE_FILE" ]; then
+    echo "ERROR: Trade file not found or not a regular file"
+    exit 1
 fi
 
-if [ -s "$file" ]; then
-    echo "File is not empty"
+# Step 2: Check if file is readable
+if [ ! -r "$TRADE_FILE" ]; then
+    echo "ERROR: No read permission on trade file"
+    exit 1
 fi
 
-# Check directory
-dir="/opt/trading"
-if [ -d "$dir" ]; then
-    echo "Directory exists"
+# Step 3: Check if file has content
+if [ ! -s "$TRADE_FILE" ]; then
+    echo "ERROR: Trade file is empty"
+    exit 1
 fi
+
+# Step 4: Check if output directory exists
+if [ ! -d "/opt/trading/output" ]; then
+    echo "Creating output directory..."
+    mkdir -p /opt/trading/output
+fi
+
+# Step 5: Check if we can write to output directory
+if [ ! -w "/opt/trading/output" ]; then
+    echo "ERROR: Cannot write to output directory"
+    exit 1
+fi
+
+# All validations passed
+echo "✓ All validations passed"
+echo "Processing: $TRADE_FILE"
+# Processing logic here...
+```
+
+#### Quick Reference Table: File Test Operators
+
+| Operator | Meaning | Common Use Case |
+|----------|---------|-----------------|
+| `-e` | Exists (any type) | General existence check |
+| `-f` | Regular file | **Most common** - before reading files |
+| `-d` | Directory | Before cd, mkdir, listing |
+| `-s` | Not empty | Verify file has content |
+| `-r` | Readable | Before reading file |
+| `-w` | Writable | Before writing file |
+| `-x` | Executable | Before running script |
+| `-L` or `-h` | Symbolic link | Detect links |
+| `-b` | Block device | Disk operations |
+| `-c` | Character device | Terminal operations |
+| `-p` | Named pipe | IPC operations |
+| `-S` | Socket | Network operations |
+| `f1 -nt f2` | Newer than | Build systems |
+| `f1 -ot f2` | Older than | Backup checks |
+| `f1 -ef f2` | Same file | Hard link detection |
+
+#### Best Practices
+
+✅ **DO**:
+```bash
+# Always quote variables
+if [ -f "$FILE" ]; then
+
+# Use -f for files, -d for directories (be specific)
+if [ -f "trades.csv" ]; then
+
+# Combine tests with &&
+if [ -f "$FILE" ] && [ -r "$FILE" ]; then
+
+# Check before operations
+if [ -d "$DIR" ]; then
+    cd "$DIR"
+fi
+```
+
+❌ **DON'T**:
+```bash
+# Don't forget quotes (breaks with spaces)
+if [ -f $FILE ]; then  # BAD
+
+# Don't use -e when you mean -f
+if [ -e "file.txt" ]; then  # Could be directory!
+
+# Don't assume file is readable
+cat "$FILE"  # Should check -r first
 ```
 
 ### String Test Operators

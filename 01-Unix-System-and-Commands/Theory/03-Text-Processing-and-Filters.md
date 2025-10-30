@@ -101,34 +101,338 @@ grep -rn "ERROR" /var/log/
 
 ### Regular Expressions with grep
 
+**What are Regular Expressions (Regex)?**
+Regular expressions are patterns used to match text. Think of them as a powerful "find" feature with special symbols that can match complex patterns.
+
+#### Why Learn Regex?
+- Search for patterns, not just exact text
+- Find emails, phone numbers, IP addresses
+- Validate data formats
+- Essential for log analysis in capital markets
+
+#### Basic Regex Symbols Explained
+
+**^ (Caret) - Beginning of Line**
+- **What it does**: Matches text only at the START of a line
+- **Example**: `^ERROR` matches lines that START with "ERROR"
+```bash
+grep "^Start" file.txt       # Lines beginning with "Start"
+grep "^2024" trades.log      # Lines starting with year 2024
+
+# Example file content:
+# Start of day      ← MATCHES (starts with "Start")
+# The Start         ← NO MATCH (Start not at beginning)
+# Start             ← MATCHES
+```
+
+**$ (Dollar) - End of Line**
+- **What it does**: Matches text only at the END of a line
+- **Example**: `COMPLETED$` matches lines that END with "COMPLETED"
+```bash
+grep "End$" file.txt         # Lines ending with "End"
+grep "SUCCESS$" trades.log   # Lines ending with SUCCESS
+
+# Example file content:
+# Trade End         ← MATCHES (ends with "End")
+# End of trade      ← NO MATCH (End not at end)
+# End               ← MATCHES
+```
+
+**. (Dot) - Any Single Character**
+- **What it does**: Matches ANY one character (except newline)
+- **Example**: `a.c` matches "abc", "a1c", "a c", but not "ac"
+```bash
+grep "a.c" file.txt          # Matches: abc, adc, a1c, a-c, a c
+grep "T...E" trades.log      # T followed by any 3 chars, then E
+                             # Matches: TRADE, T123E, T_ABE
+
+# Why useful?
+grep "ERROR.." app.log       # ERROR with any 2-digit code
+# Matches: ERROR01, ERROR99, ERRORXX
+```
+
+*** (Asterisk) - Zero or More**
+- **What it does**: Matches the preceding character ZERO or more times
+- **Example**: `ab*c` matches "ac", "abc", "abbc", "abbbc"
+```bash
+grep "ab*c" file.txt         # Zero or more 'b's
+# Matches: ac (zero b's), abc (one b), abbc (two b's)
+
+grep "ERROR:*" app.log       # ERROR with zero or more colons
+# Matches: ERROR, ERROR:, ERROR::, ERROR:::
+
+# Common use: optional characters
+grep "colou*r" file.txt      # Matches both "color" and "colour"
+```
+
+**+ (Plus) - One or More**
+- **What it does**: Matches the preceding character ONE or more times (must appear at least once)
+- **Note**: Need `-E` flag or escape it: `\+`
+```bash
+grep "ab\+c" file.txt        # One or more 'b's
+# Matches: abc, abbc, abbbc
+# DOES NOT match: ac (no b)
+
+grep -E "ERROR:+" app.log    # ERROR with at least one colon
+# Matches: ERROR:, ERROR::, ERROR:::
+# DOES NOT match: ERROR (no colon)
+
+# Difference from *:
+# ab*c matches: ac, abc, abbc    (* = zero or more)
+# ab+c matches:     abc, abbc    (+ = one or more, NOT zero)
+```
+
+**? (Question Mark) - Zero or One**
+- **What it does**: Makes preceding character OPTIONAL (0 or 1 occurrence)
+- **Note**: Need `-E` flag or escape it: `\?`
+```bash
+grep -E "colou?r" file.txt   # 'u' is optional
+# Matches: color, colour
+# DOES NOT match: colouur
+
+grep -E "https?" file.txt    # 's' is optional
+# Matches: http, https
+```
+
+**[...] (Square Brackets) - Character Class**
+- **What it does**: Matches ANY ONE character from the set
+- **Example**: `[aeiou]` matches any single vowel
+```bash
+grep "[aeiou]" file.txt      # Any vowel (a, e, i, o, or u)
+grep "[0-9]" file.txt        # Any single digit 0-9
+grep "[a-z]" file.txt        # Any single lowercase letter
+grep "[A-Z]" file.txt        # Any single UPPERCASE letter
+grep "[a-zA-Z]" file.txt     # Any single letter (any case)
+grep "[0-9a-f]" file.txt     # Any hexadecimal digit
+
+# Examples:
+grep "[Ee]rror" app.log      # Matches: Error or error
+grep "T[0-9]" trades.log     # T followed by any digit: T0, T1, T9
+grep "[Yy]es|[Nn]o" file.txt # Yes, yes, No, or no
+```
+
+**[^...] (Negated Character Class)**
+- **What it does**: Matches any character NOT in the set
+- **Note**: ^ inside [] means "not", different from ^ at start!
+```bash
+grep "[^0-9]" file.txt       # Any character that's NOT a digit
+grep "[^a-z]" file.txt       # Any character that's NOT lowercase
+
+# Example:
+# Line: "Trade123Done"
+grep "[^0-9]" file.txt       # Matches: T, r, a, d, e, D, o, n, e (not 1,2,3)
+```
+
+**{n,m} (Braces) - Repetition**
+- **What it does**: Specifies exact number of repetitions
+- **Need**: `-E` flag (Extended Regex)
+```bash
+# {n}   - Exactly n times
+# {n,}  - At least n times
+# {n,m} - Between n and m times
+
+grep -E "[0-9]{3}" file.txt        # Exactly 3 digits: 123, 999
+grep -E "[0-9]{3,}" file.txt       # At least 3 digits: 123, 1234, 12345
+grep -E "[0-9]{3,5}" file.txt      # 3 to 5 digits: 123, 1234, 12345
+
+# Practical examples:
+grep -E "[0-9]{3}-[0-9]{4}" file.txt    # Phone: 123-4567
+grep -E "[0-9]{2}:[0-9]{2}" file.txt    # Time: 12:45, 09:30
+```
+
+**| (Pipe) - OR**
+- **What it does**: Matches either pattern
+- **Need**: `-E` flag or egrep
+```bash
+grep -E "error|warning|fatal" app.log    # Any of these three
+grep -E "SUCCESS|COMPLETED" trades.log   # Either status
+grep -E "(buy|sell)" orders.log          # Either order type
+
+# Example file content:
+# ERROR: System failed    ← MATCHES (has "error")
+# WARNING: Low disk       ← MATCHES (has "warning")
+# INFO: Started           ← NO MATCH
+# FATAL: Cannot connect   ← MATCHES (has "fatal")
+```
+
+**\ (Backslash) - Escape Special Characters**
+- **What it does**: Treats special character as literal
+- **When to use**: Search for actual dot, asterisk, dollar sign, etc.
+```bash
+grep "\." file.txt           # Literal dot, not "any character"
+grep "\$" file.txt           # Literal dollar sign
+grep "\[" file.txt           # Literal square bracket
+
+# Example: Find dollar amounts
+grep "\$[0-9]" file.txt      # Matches: $5, $9
+# Without \, $ means end of line!
+```
+
+#### Regex Quick Reference Table
+
+| Symbol | Name | Meaning | Example | Matches |
+|--------|------|---------|---------|---------|
+| `^` | Caret | Start of line | `^ERROR` | Lines starting with ERROR |
+| `$` | Dollar | End of line | `END$` | Lines ending with END |
+| `.` | Dot | Any character | `a.c` | abc, a1c, a-c |
+| `*` | Asterisk | Zero or more | `ab*c` | ac, abc, abbc |
+| `+` | Plus | One or more | `ab+c` | abc, abbc (not ac) |
+| `?` | Question | Zero or one | `colou?r` | color, colour |
+| `[]` | Brackets | Character class | `[aeiou]` | Any vowel |
+| `[^]` | Negated | Not in class | `[^0-9]` | Not a digit |
+| `{n}` | Braces | Exactly n times | `[0-9]{3}` | Exactly 3 digits |
+| `{n,m}` | Braces | n to m times | `[0-9]{2,4}` | 2-4 digits |
+| `\|` | Pipe | OR | `error\|warning` | Either word |
+| `\` | Backslash | Escape | `\.` | Literal dot |
+
+#### Practical Regex Examples
+
 ```bash
 # Match beginning of line
-grep "^Start" file.txt
+grep "^Start" file.txt              # Lines starting with "Start"
+grep "^ERROR" app.log               # Error lines at start
 
 # Match end of line
-grep "End$" file.txt
+grep "End$" file.txt                # Lines ending with "End"  
+grep "COMPLETED$" trades.log        # Completed trades at line end
 
-# Match any character
-grep "a.c" file.txt          # Matches: abc, adc, a1c
+# Match any character (dot)
+grep "a.c" file.txt                 # Matches: abc, adc, a1c, a c
+grep "ERROR.." app.log              # ERROR with any 2-char code
 
-# Match zero or more
-grep "ab*c" file.txt         # Matches: ac, abc, abbc
+# Match zero or more (asterisk)
+grep "ab*c" file.txt                # Matches: ac, abc, abbc, abbbc
+grep "ERROR:*" app.log              # ERROR with zero or more colons
 
-# Match one or more
-grep "ab\+c" file.txt        # Matches: abc, abbc
+# Match one or more (plus) - needs -E or \+
+grep "ab\+c" file.txt               # Matches: abc, abbc (NOT ac)
+grep -E "ERROR:+" app.log           # ERROR with at least one colon
 
-# Match specific characters
-grep "[aeiou]" file.txt      # Any vowel
+# Match specific characters (brackets)
+grep "[aeiou]" file.txt             # Any vowel
+grep "[0-9]" file.txt               # Any digit
+grep "[a-z]" file.txt               # Any lowercase letter
+grep "[A-Z]" file.txt               # Any uppercase letter
 
 # Match range
-grep "[0-9]" file.txt        # Any digit
-grep "[a-z]" file.txt        # Any lowercase letter
+grep "[0-9]" file.txt               # Any digit 0-9
+grep "[a-z]" file.txt               # Any lowercase letter a-z
+grep "[a-zA-Z]" file.txt            # Any letter (any case)
 
-# Match multiple patterns
-grep -E "error|warning|fatal" file.txt
+# Match multiple patterns (pipe) - needs -E
+grep -E "error|warning|fatal" file.txt    # Any of these words
+grep -E "SUCCESS|FAILED" trades.log       # Either status
 
-# Extended regex (use -E or egrep)
-grep -E "[0-9]{3}-[0-9]{4}" file.txt   # Pattern like 123-4567
+# Extended regex with repetition (braces) - needs -E
+grep -E "[0-9]{3}-[0-9]{4}" file.txt      # Phone: 123-4567
+grep -E "[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}" log.txt  # IP address
+```
+
+#### Capital Markets Regex Examples
+
+```bash
+# Find trade IDs (format: T followed by 6 digits)
+grep -E "T[0-9]{6}" trades.log
+# Matches: T001234, T999999
+
+# Find stock symbols (2-4 uppercase letters)
+grep -E "\<[A-Z]{2,4}\>" trades.log
+# Matches: AAPL, MSFT, IBM, GOOGL
+
+# Find prices (dollar amounts)
+grep -E "\$[0-9]+\.[0-9]{2}" trades.log
+# Matches: $123.45, $99.99, $1234.56
+
+# Find timestamps (HH:MM:SS format)
+grep -E "[0-9]{2}:[0-9]{2}:[0-9]{2}" trades.log
+# Matches: 09:30:00, 14:25:45, 16:00:00
+
+# Find error or failure messages
+grep -E "(ERROR|FAIL|FATAL)" app.log
+# Matches lines with any of these words
+
+# Find order types
+grep -E "(BUY|SELL) [0-9]+ " orders.log
+# Matches: BUY 100, SELL 50
+
+# Find dates (YYYY-MM-DD format)
+grep -E "[0-9]{4}-[0-9]{2}-[0-9]{2}" trades.log
+# Matches: 2024-01-15, 2024-12-31
+```
+
+#### Building Complex Regex: Step by Step
+
+**Example Goal**: Match email addresses
+
+```bash
+# Step 1: username (letters, numbers, dots, dashes)
+[a-zA-Z0-9.-]+
+
+# Step 2: @ symbol
+@
+
+# Step 3: domain name (letters, numbers, dashes)
+[a-zA-Z0-9.-]+
+
+# Step 4: dot and extension (2-6 letters)
+\.[a-zA-Z]{2,6}
+
+# Complete regex:
+grep -E "[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}" file.txt
+# Matches: user@example.com, john.doe@company.co.uk
+```
+
+#### Common Regex Mistakes
+
+❌ **Mistake 1**: Forgetting to escape special characters
+```bash
+grep ".$" file.txt        # WRONG: . means any character
+grep "\.$" file.txt       # CORRECT: literal dot at end
+```
+
+❌ **Mistake 2**: Using + without -E flag
+```bash
+grep "ab+c" file.txt      # WRONG: searches for literal "ab+c"
+grep -E "ab+c" file.txt   # CORRECT: one or more 'b'
+# OR
+grep "ab\+c" file.txt     # ALSO CORRECT: escape the +
+```
+
+❌ **Mistake 3**: Confusing * (zero or more) with + (one or more)
+```bash
+grep "ERROR:*" app.log    # Matches ERROR, ERROR:, ERROR::
+grep -E "ERROR:+" app.log # Matches ERROR:, ERROR:: (NOT ERROR alone)
+```
+
+#### Best Practices
+
+✅ **DO**:
+```bash
+# Use -E for extended regex (easier to read)
+grep -E "pattern" file
+
+# Test regex on sample data first
+echo "test data" | grep -E "pattern"
+
+# Use quotes around patterns
+grep "pattern" file        # Good
+grep pattern file          # Can break with special chars
+
+# Start simple, build complexity
+grep "ERROR"               # Step 1: Find ERROR
+grep "ERROR:"              # Step 2: Add colon
+grep -E "ERROR:[0-9]+"     # Step 3: Add error code
+```
+
+❌ **DON'T**:
+```bash
+# Don't use complex regex when simple search works
+grep -E "^.*ERROR.*$" file    # Overcomplicated
+grep "ERROR" file             # Much better
+
+# Don't forget quotes (special chars can break)
+grep ERROR* file          # Shell expands *, wrong!
+grep "ERROR*" file        # Correct
 ```
 
 ### Practical Examples
