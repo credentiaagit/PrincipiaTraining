@@ -33,16 +33,20 @@ Our system handles:
 ```
 PrincipiaTraining/
 │
-├── 00-LEARNING-PATH-GUIDE.md          # Start here! Complete learning roadmap
+├── 00-LEARNING-PATH-GUIDE.md              # Start here! Complete learning roadmap
+├── CODING-STANDARDS-SUMMARY.md            # Quick reference for all coding standards
+├── IMPROVEMENTS-COMPLETED.md              # Recent documentation improvements
+├── REFERENCE-LINKS-SUMMARY.md             # All learning resource links
 │
 ├── 01-Unix-System-and-Commands/
-│   ├── Theory/                         # Concepts and explanations
+│   ├── Theory/                             # Concepts and explanations
 │   │   ├── 01-Basic-Unix-Concepts.md
 │   │   ├── 02-Navigation-and-File-Operations.md
 │   │   ├── 03-Text-Processing-and-Filters.md
 │   │   ├── 04-Advanced-Unix-Commands.md
-│   │   └── 05-Industry-Use-Cases.md
-│   ├── SamplePrograms/                 # Working examples
+│   │   ├── 05-Industry-Use-Cases.md
+│   │   └── 06-File-and-Directory-Naming-Standards.md  # NEW! Naming conventions
+│   ├── SamplePrograms/                     # Working examples
 │   │   ├── README.md
 │   │   ├── 01-basic-commands-demo.sh
 │   │   ├── 02-text-processing-demo.sh
@@ -56,44 +60,33 @@ PrincipiaTraining/
 │   ├── Theory/
 │   │   ├── 01-Shell-Scripting-Basics.md
 │   │   ├── 02-Control-Structures.md
-│   │   └── 03-Functions-and-Advanced-Topics.md
+│   │   ├── 03-Functions-and-Advanced-Topics.md
+│   │   └── 04-Coding-Standards.md                # NEW! Shell scripting conventions
 │   ├── SamplePrograms/
-│   │   ├── README.md
-│   │   ├── 01-trading-file-processor.sh
-│   │   ├── 02-data-validation.sh
-│   │   ├── 03-log-analyzer.sh
-│   │   └── 04-backup-automation.sh
 │   └── Exercises/
-│       └── 01-Shell-Scripting-Exercises.md
 │
 ├── 03-TCL-Programming/
 │   ├── Theory/
 │   │   ├── 01-TCL-Introduction.md
 │   │   ├── 02-TCL-Control-and-Lists.md
-│   │   └── 03-File-IO-Arrays-Database.md
+│   │   ├── 03-File-IO-Arrays-Database.md
+│   │   └── 04-Coding-Standards.md                # NEW! TCL coding conventions
 │   ├── SamplePrograms/
-│   │   ├── README.md
-│   │   ├── 01-trade-processor.tcl
-│   │   ├── 02-file-operations.tcl
-│   │   └── 03-database-operations.tcl
 │   └── Exercises/
-│       └── 01-TCL-Exercises.md
 │
 ├── 04-SQL-Database/
 │   ├── Theory/
 │   │   ├── 01-SQL-Fundamentals.md
-│   │   └── 02-Joins-Transactions-Advanced.md
+│   │   ├── 02-Joins-Transactions-Advanced.md
+│   │   └── 03-Coding-Standards.md                # NEW! SQL naming conventions
 │   ├── SamplePrograms/
-│   │   ├── README.md
-│   │   ├── 01-capital-markets-queries.sql
-│   │   └── 02-advanced-sql-queries.sql
 │   └── Exercises/
-│       └── 01-SQL-Exercises.md
 │
 ├── 05-Tidal-Scheduler/
 │   ├── Theory/
 │   │   ├── 01-Tidal-Overview.md
-│   │   └── 02-Tidal-Practical-Guide.md
+│   │   ├── 02-Tidal-Practical-Guide.md
+│   │   └── 03-Naming-Standards.md                # NEW! Job naming conventions
 │   ├── SamplePrograms/
 │   │   ├── README.md
 │   │   └── 01-sample-job-definitions.md
@@ -244,6 +237,43 @@ PrincipiaTraining/
 - **Ask questions**: How is this used in production?
 - **Shadow experienced team members**: See it in action
 - **Participate in code reviews**: Learn best practices
+
+### 5. Coding Standards
+- **Follow conventions**: Each technology has specific naming and formatting standards
+- **Review before coding**: Check the coding standards document
+- **Write readable code**: Use descriptive names, add comments
+- **Be consistent**: Follow the same pattern throughout your code
+
+---
+
+## 📝 Coding Standards
+
+This repository includes comprehensive coding standards for all technologies:
+
+### Quick Reference
+- **`CODING-STANDARDS-SUMMARY.md`** - Quick comparison of all standards
+- Shell Scripting: `02-Shell-Scripting/Theory/04-Coding-Standards.md`
+- TCL Programming: `03-TCL-Programming/Theory/04-Coding-Standards.md`
+- SQL Database: `04-SQL-Database/Theory/03-Coding-Standards.md`
+- Unix Files: `01-Unix-System-and-Commands/Theory/06-File-and-Directory-Naming-Standards.md`
+- Tidal Scheduler: `05-Tidal-Scheduler/Theory/03-Naming-Standards.md`
+
+### Key Conventions at a Glance
+
+| Technology | Variables | Functions/Procedures | Files | Keywords |
+|------------|-----------|---------------------|-------|----------|
+| **Shell** | `snake_case` | `snake_case` | `kebab-case.sh` | N/A |
+| **TCL** | `camelCase` | `camelCase` | `camelCase.tcl` | N/A |
+| **SQL** | `snake_case` | N/A | N/A | `UPPERCASE` |
+| **Unix Files** | N/A | N/A | `kebab-case` | N/A |
+| **Tidal** | `UPPER_CASE` | N/A | N/A | N/A |
+
+### Why Follow Coding Standards?
+✅ **Professional codebase**: Industry-standard practices
+✅ **Team collaboration**: Everyone writes code the same way
+✅ **Easier maintenance**: Consistent code is easier to understand
+✅ **Fewer errors**: Standards prevent common mistakes
+✅ **Faster code reviews**: Reviewers know what to expect
 
 ---
 
